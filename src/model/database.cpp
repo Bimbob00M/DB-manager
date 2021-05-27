@@ -139,10 +139,13 @@ namespace PatientsDBManager
     {
         if( open( databaseName ) )
         {
-            if( !createPhotoSetsTable() || !createPatientsTable() )
-                QFile::remove( m_fileName );
-            else
+            if( createPhotoSetsTable() && createPatientsTable() )
                 return true;
+            else
+            {
+                close();
+                QFile::remove( m_fileName );
+            }
         }
         return false;
     }
@@ -175,14 +178,14 @@ namespace PatientsDBManager
     {
         QSqlQuery query;
         query.prepare( "CREATE TABLE " + PHOTOS_SET_TABLE_NAME + " ("
-                       "'Id'	INTEGER NOT NULL,"
+                       "'Id'	INTEGER NOT NULL UNIQUE,"
                        "'Date'	TEXT NOT NULL,"
                        "'Filename'	TEXT NOT NULL,"
                        "'Photo'	BLOB NOT NULL,"
                        "'Patient_Id' INTEGER NOT NULL,"
-                       "FOREIGN KEY(\"Patient_Id\") REFERENCES" +
-                       PATIENTS_TABLE_NAME + "(\"Id\") ON DELETE CASCADE ON UPDATE CASCADE,"
-                       "PRIMARY KEY(\"Id\") );" );
+                       "PRIMARY KEY(\"Id\" AUTOINCREMENT ), "
+                       "FOREIGN KEY(\"Patient_Id\") REFERENCES " +
+                       PATIENTS_TABLE_NAME + " (\"Id\") ON DELETE CASCADE ON UPDATE CASCADE );" );
 
         //query.bindValue( ":tablename", PHOTOS_PACK_TABLE_NAME );
 

@@ -41,7 +41,6 @@ namespace PatientsDBManager
         QString      m_fileName;
 
         bool open( const QString &databaseName ) noexcept;
-        bool openOrRestore( const QString &databaseName ) noexcept;
         bool restore( const QString& databaseName ) noexcept;
         bool createPatientsTable() noexcept;
         bool createPhotoSetsTable() noexcept;
