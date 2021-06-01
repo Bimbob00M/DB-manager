@@ -1,14 +1,14 @@
-#include "sql_table_view.h"
+#include "table_view_ex.h"
 
 #include <QMouseEvent>
 
 namespace PatientsDBManager
 {
-    SqlTableView::SqlTableView( QWidget* parent ) noexcept
+    TableViewEx::TableViewEx( QWidget* parent ) noexcept
         : QTableView( parent )
     {}
 
-    void SqlTableView::mouseDoubleClickEvent( QMouseEvent* event )
+    void TableViewEx::mouseDoubleClickEvent( QMouseEvent* event )
     {
         if ( event->button() == Qt::LeftButton )
             emit leftDoubleClicked();

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>edit-clear-icon.png</file>
+    </qresource>
+</RCC>

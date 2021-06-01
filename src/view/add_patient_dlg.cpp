@@ -72,9 +72,9 @@ namespace PatientsDBManager
             {
                 QString fieldName;
                 if( m_patientInfo.getNameField()->text().isEmpty() )
-                    fieldName = "\"Name\"";
+                    fieldName = "\'Name\'";
                 else
-                    fieldName = "\"Address\"";
+                    fieldName = "\'Address\'";
 
                 QMessageBox::warning( this,
                                       "Incorrect data",

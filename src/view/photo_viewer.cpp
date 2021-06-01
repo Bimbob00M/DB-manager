@@ -121,7 +121,7 @@ namespace PatientsDBManager
 
     void PhotoViewer::onDestroyed() noexcept
     {
-        emit destroyMe( this );
+        delete this;
     }
 
 }

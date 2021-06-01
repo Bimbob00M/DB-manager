@@ -28,8 +28,8 @@ namespace PatientsDBManager
         EConnectionResult connect() noexcept;
         bool isConnected() const noexcept { return m_db.isOpen(); }
 
-        QSqlTableModel* createPatientsModel() const noexcept;
-        QSqlTableModel* createPhotoSetsModel() const noexcept;
+        QSqlTableModel* createPatientsModel( QObject* parent = nullptr ) const noexcept;
+        QSqlTableModel* createPhotoSetModel( QObject* parent = nullptr ) const noexcept;
 
         QSqlDatabase& getConnection() noexcept { return m_db; }
         const QSqlDatabase& getConnection() const noexcept { return m_db; }

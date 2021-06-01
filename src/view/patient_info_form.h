@@ -8,6 +8,8 @@
 #include <QLineEdit>
 #include <QWidget>
 
+#include "date_edit_ex.h"
+
 namespace PatientsDBManager
 {
     class PatientInfoForm : public QWidget
@@ -29,24 +31,24 @@ namespace PatientsDBManager
         QDateEdit*       getAdmissionDateField() noexcept { return m_admissionDateField; }
         const QDateEdit* getAdmissionDateField() const noexcept { return m_admissionDateField; }
 
-        QDateEdit*       getDiscargeDateField() noexcept { return m_discargeDateField; }
-        const QDateEdit* getDiscargeDateField() const noexcept { return m_discargeDateField; }
+        DateEditEx*       getDiscargeDateField() noexcept { return m_discargeDateField; }
+        const DateEditEx* getDiscargeDateField() const noexcept { return m_discargeDateField; }
 
-        bool isValid() const noexcept { return m_validationFlag; }
-
-        void setInfoGroupTitle( const QString& title ) noexcept;
         void setName( const QString& name) noexcept{ m_nameField->setText( name ); }
         void setAddress( const QString& address ) noexcept{ m_addressField->setText( address ); }
         void setBirthDate( const QDate& date ) noexcept{ m_birthDateField->setDate( date ); }
         void setAdmissionDate( const QDateTime& date ) noexcept{ m_admissionDateField->setDateTime( date ); }
         void setDiscargeDate( const QDateTime& date ) noexcept{ m_discargeDateField->setDateTime( date ); }
+        void setInfoGroupTitle( const QString& title ) noexcept;
+
+        bool isValid() const noexcept { return m_validationFlag; }
 
     private:
         QLineEdit* m_nameField{ nullptr };
         QLineEdit* m_addressField{ nullptr };
         QDateEdit* m_birthDateField{ nullptr };
         QDateEdit* m_admissionDateField{ nullptr };
-        QDateEdit* m_discargeDateField{ nullptr };
+        DateEditEx* m_discargeDateField{ nullptr };
         QGroupBox* m_patientInfoGroup{ nullptr };
 
         bool m_validationFlag{ false };

@@ -1,4 +1,4 @@
-#ifndef ADDDIALOG_H
+    #ifndef ADDDIALOG_H
 #define ADDDIALOG_H
 
 #include <memory>

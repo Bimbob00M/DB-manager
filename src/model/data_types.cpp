@@ -38,11 +38,11 @@ namespace PatientsDBManager
     }
 
     Patient::Patient( Patient&& p )
-        : Patient( std::move( p.name ),
-                   std::move( p.address ),
-                   std::move( p.birthDate ),
-                   std::move( p.admissionDate ),
-                   std::move( p.discargeDate ) )
+        : name( std::move( p.name ) )
+        , address( std::move( p.address ) )
+        , birthDate( std::move( p.birthDate ) )
+        , admissionDate( std::move( p.admissionDate ) )
+        , discargeDate( std::move( p.discargeDate ) )
     {}
 
     Patient& Patient::operator=( Patient&& p )

@@ -5,11 +5,11 @@
 
 namespace PatientsDBManager
 {
-    class SqlTableView : public QTableView
+    class TableViewEx : public QTableView
     {
         Q_OBJECT
     public:
-        SqlTableView( QWidget* parent = nullptr ) noexcept;
+        TableViewEx( QWidget* parent = nullptr ) noexcept;
 
     signals:
         void leftDoubleClicked();

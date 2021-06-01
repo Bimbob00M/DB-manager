@@ -52,7 +52,7 @@ namespace PatientsDBManager
         m_addressField =       new ( std::nothrow ) QLineEdit;
         m_birthDateField =     new ( std::nothrow ) QDateEdit;
         m_admissionDateField = new ( std::nothrow ) QDateEdit;
-        m_discargeDateField =  new ( std::nothrow ) QDateEdit;
+        m_discargeDateField =  new ( std::nothrow ) DateEditEx;
         m_patientInfoGroup =   new ( std::nothrow ) QGroupBox;
 
         if( !m_nameField ||
@@ -75,19 +75,26 @@ namespace PatientsDBManager
         m_admissionDateField->setCalendarPopup( true );
         m_discargeDateField->setCalendarPopup( true );
 
+        m_discargeDateField->setNullable( true );
+
         QSizePolicy fieldsPolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
+        m_birthDateField->setMinimumDate( QDate( 100, 1, 1 ) );
         const auto& today = QDate::currentDate();
         m_admissionDateField->setMinimumDate( today );
         m_discargeDateField->setMinimumDate( today );
 
+        m_birthDateField->setDisplayFormat( Global::DATE_FORMAT );
+        m_admissionDateField->setDisplayFormat( Global::DATE_FORMAT );
+        m_discargeDateField->setDisplayFormat( Global::DATE_FORMAT );
+
         m_nameField->setSizePolicy( fieldsPolicy );
         m_addressField->setSizePolicy( fieldsPolicy );
         m_birthDateField->setSizePolicy( fieldsPolicy );
-        m_admissionDateField ->setSizePolicy( fieldsPolicy );
+        m_admissionDateField->setSizePolicy( fieldsPolicy );
         m_discargeDateField->setSizePolicy( fieldsPolicy );
 
-        connect( m_admissionDateField, &QDateEdit::dateChanged, m_discargeDateField, &QDateEdit::setMinimumDate );
+        connect( m_admissionDateField, &QDateEdit::dateChanged, m_discargeDateField, &DateEditEx::setMinimumDate );
 
         return true;
     }

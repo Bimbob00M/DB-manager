@@ -20,9 +20,6 @@ namespace PatientsDBManager
 
         void setTitle( const QString& title ) noexcept;
 
-    signals:
-        void destroyMe( PhotoViewer* pThis );
-
     public slots:
         void zoomIn() noexcept;
         void zoomOut() noexcept;

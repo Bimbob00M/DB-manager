@@ -44,7 +44,6 @@ namespace PatientsDBManager
                                 .arg( PATIENTS_TABLE_NAME );
                     return  EConnectionResult::NO_TABLE;
                 }
-
                 return EConnectionResult::CONNECTED;
             }
             return EConnectionResult::OPENING_FAILED;
@@ -56,9 +55,9 @@ namespace PatientsDBManager
         }
     }
 
-    QSqlTableModel *Database::createPatientsModel() const noexcept
+    QSqlTableModel *Database::createPatientsModel( QObject* parent ) const noexcept
     {
-        if( auto patientsModel = new ( std::nothrow ) QSqlTableModel( nullptr, m_db ) )
+        if( auto patientsModel = new ( std::nothrow ) QSqlTableModel( parent, m_db ) )
         {
             patientsModel->setTable( PATIENTS_TABLE_NAME );
             patientsModel->setEditStrategy( QSqlTableModel::OnManualSubmit );
@@ -76,9 +75,9 @@ namespace PatientsDBManager
             return nullptr;
     }
 
-    QSqlTableModel *Database::createPhotoSetsModel() const noexcept
+    QSqlTableModel *Database::createPhotoSetModel( QObject* parent ) const noexcept
     {
-        if( auto photoSetsModel = new ( std::nothrow ) QSqlTableModel( nullptr, m_db ) )
+        if( auto photoSetsModel = new ( std::nothrow ) QSqlTableModel( parent, m_db ) )
         {
             photoSetsModel->setTable( PHOTOS_SET_TABLE_NAME );
             photoSetsModel->setEditStrategy( QSqlTableModel::OnManualSubmit );
