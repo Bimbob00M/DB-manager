@@ -3,11 +3,10 @@
 
 #include <QByteArray>
 #include <QDialog>
+#include <QEvent>
 #include <QLabel>
 #include <QScrollArea>
 #include <QImage>
-
-#include <QEvent>
 
 namespace PatientsDBManager
 {
@@ -29,8 +28,6 @@ namespace PatientsDBManager
         bool eventFilter( QObject* o, QEvent* e ) override;
 
     private:
-
-        QPixmap      m_image;
         QLabel*      m_imageLabel{ nullptr };
         QScrollArea* m_scrollArea{ nullptr };
         double       m_scaleFactor{ 1 };
@@ -40,9 +37,6 @@ namespace PatientsDBManager
 
         void scaleImage( double factor ) noexcept;
         void adjustScrollBar( QScrollBar* scrollBar, double factor ) noexcept;
-
-    private slots:
-        void onDestroyed() noexcept;
 
     };
 }

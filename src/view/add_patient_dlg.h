@@ -19,7 +19,7 @@ namespace PatientsDBManager
     public:
         AddPatientDlg( QWidget* parent = nullptr ) noexcept;
 
-        std::unique_ptr<Patient> getPatient() const noexcept;
+        const Patient& getPatient() const noexcept{ return m_patient; }
 
     signals:
         void confirmed( const Patient& patient );

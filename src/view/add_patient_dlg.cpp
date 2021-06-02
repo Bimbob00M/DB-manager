@@ -38,11 +38,6 @@ namespace PatientsDBManager
         connect( &m_dialogBtn, &QDialogButtonBox::clicked, this, &AddPatientDlg::onDialogBtnClicked );
     }
 
-    std::unique_ptr<Patient> AddPatientDlg::getPatient() const noexcept
-    {
-        return std::make_unique<Patient>( m_patient );
-    }
-
     bool AddPatientDlg::setupLayout() noexcept
     {
         auto mainLayout = new ( std::nothrow ) QVBoxLayout( this );
@@ -70,12 +65,7 @@ namespace PatientsDBManager
             if( m_patientInfo.getNameField()->text().isEmpty() ||
                 m_patientInfo.getAddressField()->text().isEmpty() )
             {
-                QString fieldName;
-                if( m_patientInfo.getNameField()->text().isEmpty() )
-                    fieldName = "\'Name\'";
-                else
-                    fieldName = "\'Address\'";
-
+                QString fieldName = ( m_patientInfo.getNameField()->text().isEmpty() ) ? "\'Name\'" : "\'Address\'";
                 QMessageBox::warning( this,
                                       "Incorrect data",
                                       fieldName + " field cannot be empty",

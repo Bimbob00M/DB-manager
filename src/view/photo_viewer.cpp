@@ -7,14 +7,14 @@
 namespace PatientsDBManager
 {
 
-    PhotoViewer::PhotoViewer( const QByteArray& binaryImage, QWidget *parent )
+    PhotoViewer::PhotoViewer( const QByteArray& binaryImage, QWidget* parent )
         : QDialog( parent )
     {
         if( !init( binaryImage ) )
             close();
     }
 
-    PhotoViewer::PhotoViewer( const QString &title, const QByteArray &binaryImage, QWidget *parent )
+    PhotoViewer::PhotoViewer( const QString &title, const QByteArray &binaryImage, QWidget* parent )
         : QDialog( parent )
     {
         if( !init( binaryImage ) )
@@ -58,35 +58,36 @@ namespace PatientsDBManager
 
     bool PhotoViewer::init( const QByteArray& binaryImage ) noexcept
     {
-        m_imageLabel = new ( std::nothrow ) QLabel;
-        m_scrollArea = new ( std::nothrow ) QScrollArea;
+        setAttribute( Qt::WA_DeleteOnClose );
+        auto image =   new ( std::nothrow ) QPixmap;
+        m_imageLabel = new ( std::nothrow ) QLabel( this );
+        m_scrollArea = new ( std::nothrow ) QScrollArea( this );
 
         if( !m_imageLabel ||
             !m_scrollArea ||
             binaryImage.isNull() ||
             binaryImage.isEmpty() )
         {
-            delete m_imageLabel;
-            delete m_scrollArea;
             return false;
         }
 
-        if( !m_image.loadFromData( binaryImage ) )
+        if( !image->loadFromData( binaryImage ) )
+        {
             return false;
+        }
 
         m_imageLabel->setBackgroundRole( QPalette::Base );
         m_imageLabel->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
         m_imageLabel->setScaledContents( true );
-        m_imageLabel->setPixmap( m_image );
+        m_imageLabel->setPixmap( *image );
 
         m_scrollArea->setBackgroundRole( QPalette::Dark );
         m_scrollArea->setWidget( m_imageLabel );
         m_scrollArea->verticalScrollBar()->installEventFilter( this );
         m_scrollArea->horizontalScrollBar()->installEventFilter( this );
 
-        resize( m_image.size() );
-
-        connect( this, &PhotoViewer::finished, this, &PhotoViewer::onDestroyed );
+        resize( image->size() );
+        delete image;
 
         return setupLayout();
     }
@@ -118,10 +119,4 @@ namespace PatientsDBManager
         scrollBar->setValue( int( factor * scrollBar->value() +
                                   ( ( factor - 1 ) * scrollBar->pageStep() / 2 ) ) );
     }
-
-    void PhotoViewer::onDestroyed() noexcept
-    {
-        delete this;
-    }
-
 }

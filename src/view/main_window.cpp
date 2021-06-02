@@ -162,7 +162,6 @@ namespace PatientsDBManager
             !m_returnBtn )
         {
             deleteAllControls();
-
             return false;
         }
 
@@ -504,14 +503,14 @@ namespace PatientsDBManager
                     const auto& p = dialog.getPatient();
 
                     QSqlRecord newPatientRecord = model->record();
-                    newPatientRecord.setValue( "Name", p.get()->name );
-                    newPatientRecord.setValue( "Address", p.get()->address );
-                    newPatientRecord.setValue( "BirthDate", p.get()->birthDate );
-                    newPatientRecord.setValue( "AdmissionDate", p.get()->admissionDate );
+                    newPatientRecord.setValue( "Name", p.name );
+                    newPatientRecord.setValue( "Address", p.address );
+                    newPatientRecord.setValue( "BirthDate", p.birthDate );
+                    newPatientRecord.setValue( "AdmissionDate", p.admissionDate );
 
-                    const auto& discargeDate = p.get()->discargeDate.isEmpty()
+                    const auto& discargeDate = p.discargeDate.isEmpty()
                                                             ? Global::EMPTY_CELL_DEFAULT_VALUE
-                                                            : p.get()->discargeDate;
+                                                            : p.discargeDate;
                     newPatientRecord.setValue( "DiscargeDate", discargeDate );
 
                     if( !model->insertRecord( -1, newPatientRecord ) )
@@ -624,8 +623,12 @@ namespace PatientsDBManager
     {
         if( auto model = dynamic_cast<QSqlTableModel*>( m_patientsView->model() ) )
         {
-            const auto row = m_patientsView->selectionModel()->currentIndex().row();
+            const auto& selectedRows = m_patientsView->selectionModel()->selectedRows();
 
+            if( selectedRows.isEmpty() || !selectedRows.first().isValid() )
+                return;
+
+            const auto row = selectedRows.first().row();
             m_currentPatientId = model->index( row, 0 ).data().toLongLong();
 
             m_patientInfoLbl->setText( QString( "Patient #%1" ).arg( m_currentPatientId ) );
@@ -649,7 +652,7 @@ namespace PatientsDBManager
                 const auto& binaryImage = model->index( modelIndex.row(), 3 ).data().toByteArray();
 
                 // PhotoViewer will free up memory
-                ( new PhotoViewer( title, binaryImage ) )->show();
+                ( new PhotoViewer( title, binaryImage, this ) )->show();
             }
         }
     }
